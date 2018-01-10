@@ -1,6 +1,7 @@
 package org.knowm.xchange.okcoin.service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,6 +20,9 @@ import org.knowm.xchange.dto.trade.UserTrades;
 import org.knowm.xchange.exceptions.NotAvailableFromExchangeException;
 import org.knowm.xchange.okcoin.OkCoinAdapters;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinBatchTradeResult;
+import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowOrder;
+import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowOrderResult;
+import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinOrderResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinTradeResult;
 import org.knowm.xchange.service.trade.TradeService;
@@ -277,5 +281,29 @@ public class OkCoinTradeService extends OkCoinTradeServiceRaw implements TradeSe
     public String getOrderId() {
       return id;
     }
+  }
+
+  public String borrow(BigDecimal amount, BigDecimal days, BigDecimal rate, CurrencyPair pair)
+      throws IOException {
+    long borrowId =
+        borrow(
+                amount.toPlainString(),
+                days.toPlainString(),
+                rate.toPlainString(),
+                OkCoinAdapters.adaptSymbol(pair))
+            .getBorrowId();
+    return String.valueOf(borrowId);
+  }
+
+  public boolean repay(String borrowId) throws IOException {
+    long id = Long.valueOf(borrowId);
+    OkCoinBorrowResult result = repay(id);
+    return (result.getBorrowId() == id);
+  }
+
+  public OkCoinBorrowOrder borrowInfo(String borrowId) throws IOException {
+    long id = Long.valueOf(borrowId);
+    OkCoinBorrowOrderResult result = getBorrowInfo(id);
+    return result.getBorrowOrder();
   }
 }

@@ -282,9 +282,9 @@ public interface OkCoin {
 
   @POST
   @Path("repayment.do")
-  OkCoinBorrowResult repayment(@FormParam("api_key") String apikey, @FormParam("borrow_id") String borrowId, @FormParam("sign") ParamsDigest sign) throws IOException;
+  OkCoinBorrowResult repay(@FormParam("api_key") String apikey, @FormParam("borrow_id") long borrowId, @FormParam("sign") ParamsDigest sign) throws IOException;
 
   @POST
   @Path("borrow_order_info.do")
-  OkCoinBorrowOrderResult borrowInfo(@FormParam("api_key") String apikey, @FormParam("borrow_id") String borrowId, @FormParam("sign") ParamsDigest sign) throws IOException;
+  OkCoinBorrowOrderResult borrowInfo(@FormParam("api_key") String apikey, @FormParam("borrow_id") long borrowId, @FormParam("sign") ParamsDigest sign) throws IOException;
 }

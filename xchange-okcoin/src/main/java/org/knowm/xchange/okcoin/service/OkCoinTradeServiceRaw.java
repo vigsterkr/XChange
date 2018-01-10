@@ -8,6 +8,8 @@ import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.okcoin.FuturesContract;
 import org.knowm.xchange.okcoin.OkCoinAdapters;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinBatchTradeResult;
+import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowOrderResult;
+import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinFuturesOrderResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinFuturesTradeHistoryResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinOrderResult;
@@ -160,5 +162,26 @@ public class OkCoinTradeServiceRaw extends OKCoinBaseTradeService {
         okCoin.getFuturesPositionsCross(apikey, symbol, contract.getName(), signatureCreator());
 
     return returnOrThrow(futuresPositionsCross);
+  }
+
+  public OkCoinBorrowResult borrow(String amount, String symbol, String days, String rate)
+      throws IOException {
+    OkCoinBorrowResult borrowResult =
+        okCoin.borrow(apikey, amount, symbol, days, rate, signatureCreator());
+
+    return returnOrThrow(borrowResult);
+  }
+
+  public OkCoinBorrowResult repay(long borrowId) throws IOException {
+    OkCoinBorrowResult borrowResult = okCoin.repay(apikey, borrowId, signatureCreator());
+
+    return returnOrThrow(borrowResult);
+  }
+
+  public OkCoinBorrowOrderResult getBorrowInfo(long borrowId) throws IOException {
+    OkCoinBorrowOrderResult borrowOrderResult =
+        okCoin.borrowInfo(apikey, borrowId, signatureCreator());
+
+    return returnOrThrow(borrowOrderResult);
   }
 }

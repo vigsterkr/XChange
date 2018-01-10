@@ -19,6 +19,8 @@ import org.knowm.xchange.okcoin.dto.marketdata.OkCoinTickerResponse;
 import org.knowm.xchange.okcoin.dto.marketdata.OkCoinTrade;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinBatchTradeResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinErrorResult;
+import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowOrderResult;
+import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinFuturesOrderResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinFuturesTradeHistoryResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinOrderResult;
@@ -272,4 +274,17 @@ public interface OkCoin {
       @FormParam("to") int to,
       @FormParam("sign") ParamsDigest sign)
       throws IOException;
+
+  @POST
+  @Path("borrow_money.do")
+  OkCoinBorrowResult borrow(@FormParam("api_key") String apikey, @FormParam("amount") String amount, @FormParam("symbol") String symbol,
+                            @FormParam("days") String days, @FormParam("rate") String rate, @FormParam("sign") ParamsDigest sign) throws IOException;
+
+  @POST
+  @Path("repayment.do")
+  OkCoinBorrowResult repayment(@FormParam("api_key") String apikey, @FormParam("borrow_id") String borrowId, @FormParam("sign") ParamsDigest sign) throws IOException;
+
+  @POST
+  @Path("borrow_order_info.do")
+  OkCoinBorrowOrderResult borrowInfo(@FormParam("api_key") String apikey, @FormParam("borrow_id") String borrowId, @FormParam("sign") ParamsDigest sign) throws IOException;
 }

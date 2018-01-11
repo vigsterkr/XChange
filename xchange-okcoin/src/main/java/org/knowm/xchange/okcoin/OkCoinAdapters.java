@@ -235,7 +235,7 @@ public final class OkCoinAdapters {
         "" + trade.getTid());
   }
 
-  private static LimitOrder adaptOpenOrder(OkCoinOrder order) {
+  public static LimitOrder adaptOpenOrder(OkCoinOrder order) {
 
     return new LimitOrder(
         adaptOrderType(order.getType()),

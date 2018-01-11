@@ -283,14 +283,30 @@ public class OkCoinTradeService extends OkCoinTradeServiceRaw implements TradeSe
     }
   }
 
-  public String borrow(BigDecimal amount, BigDecimal days, BigDecimal rate, CurrencyPair pair)
+  @Override
+  public Collection<Order> getOrder(String... orderIds) throws IOException {
+    List<Order> orders = new ArrayList<>();
+    // FIXME: filter for symbol would be great
+    List<CurrencyPair> exchangeSymbols = exchange.getExchangeSymbols();
+    for (String orderId : orderIds) {
+      for (CurrencyPair symbol : exchangeSymbols) {
+        OkCoinOrderResult orderResult =
+            getOrder(Long.valueOf(orderId), OkCoinAdapters.adaptSymbol(symbol));
+        if (orderResult.getOrders().length > 0) {
+          // we shall only use one - oderId should be unique!
+          orders.add(OkCoinAdapters.adaptOpenOrder(orderResult.getOrders()[0]));
+          break;
+        }
+      }
+    }
+
+    return orders;
+  }
+
+  public String borrow(BigDecimal amount, CurrencyPair pair, String days, BigDecimal rate)
       throws IOException {
     long borrowId =
-        borrow(
-                amount.toPlainString(),
-                days.toPlainString(),
-                rate.toPlainString(),
-                OkCoinAdapters.adaptSymbol(pair))
+        borrow(amount.toPlainString(), OkCoinAdapters.adaptSymbol(pair), days, rate.toPlainString())
             .getBorrowId();
     return String.valueOf(borrowId);
   }

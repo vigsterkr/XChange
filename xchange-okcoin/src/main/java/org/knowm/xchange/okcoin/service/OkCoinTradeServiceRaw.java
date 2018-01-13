@@ -12,6 +12,7 @@ import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowOrderResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinFuturesOrderResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinFuturesTradeHistoryResult;
+import org.knowm.xchange.okcoin.dto.trade.OkCoinLendDepthResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinOrderResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinPositionResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinPriceLimit;
@@ -182,6 +183,15 @@ public class OkCoinTradeServiceRaw extends OKCoinBaseTradeService {
     OkCoinBorrowOrderResult borrowOrderResult =
         okCoin.borrowInfo(apikey, borrowId, signatureCreator());
 
+    return returnOrThrow(borrowOrderResult);
+  }
+
+  public OkCoinLendDepthResult lendDepth(String symbol) throws IOException {
+    OkCoinLendDepthResult borrowOrderResult = okCoin.lendDepth(apikey, symbol, signatureCreator());
+    // FIXME: should do returnOrThrow(borrowOrderResult)
+    // but okcoin returns error, although the array is there :S
+    if (borrowOrderResult.getLends() != null && borrowOrderResult.getLends().length > 0)
+      return borrowOrderResult;
     return returnOrThrow(borrowOrderResult);
   }
 }

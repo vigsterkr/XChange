@@ -287,4 +287,10 @@ public interface OkCoin {
   @POST
   @Path("borrow_order_info.do")
   OkCoinBorrowOrderResult borrowInfo(@FormParam("api_key") String apikey, @FormParam("borrow_id") long borrowId, @FormParam("sign") ParamsDigest sign) throws IOException;
+
+  @POST
+  @Path("lend_depth.do")
+  OkCoinLendDepthResult lendDepth(@FormParam("api_key") String apikey, @FormParam("symbol") String symbol, @FormParam("sign") ParamsDigest sign) throws IOException;
+
+
 }

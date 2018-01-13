@@ -69,6 +69,8 @@ public class OkCoinUtils {
         return "Order price can not be ≤ 0 or ≥ 1,000,000";
       case (10015):
         return "Order price differs from current market price too much";
+      case (10018):
+        return "borrow amount less than lower limit";
       case (10216):
         return "Non-public API";
       case (20001):

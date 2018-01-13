@@ -2,8 +2,11 @@ package org.knowm.xchange.okcoin.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +26,8 @@ import org.knowm.xchange.okcoin.dto.trade.OkCoinBatchTradeResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowOrder;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowOrderResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowResult;
+import org.knowm.xchange.okcoin.dto.trade.OkCoinLend;
+import org.knowm.xchange.okcoin.dto.trade.OkCoinLendDepthResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinOrderResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinTradeResult;
 import org.knowm.xchange.service.trade.TradeService;
@@ -321,5 +326,17 @@ public class OkCoinTradeService extends OkCoinTradeServiceRaw implements TradeSe
     long id = Long.valueOf(borrowId);
     OkCoinBorrowOrderResult result = getBorrowInfo(id);
     return result.getBorrowOrder();
+  }
+
+  public BigDecimal getBorrowRate(BigDecimal amount, CurrencyPair pair) throws IOException {
+    OkCoinLendDepthResult result = lendDepth(OkCoinAdapters.adaptSymbol(pair));
+    List<OkCoinLend> lends = Arrays.asList(result.getLends());
+    lends.sort(Comparator.comparing(OkCoinLend::getRate));
+    for (OkCoinLend lend : lends) {
+      if (lend.getAmount().compareTo(amount) >= 0) {
+        return lend.getRate();
+      }
+    }
+    return null;
   }
 }

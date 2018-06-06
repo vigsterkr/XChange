@@ -1,45 +1,46 @@
 package org.knowm.xchange.okcoin.dto.trade;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
 
 public class OkCoinLend {
 
-    private final BigDecimal amount;
+  private final BigDecimal amount;
 
-    private final String days;
+  private final String days;
 
-    private final BigDecimal numOfLoans;
+  private final BigDecimal numOfLoans;
 
-    private final BigDecimal rate;
+  private final BigDecimal rate;
 
-    public OkCoinLend(@JsonProperty("amount") final BigDecimal amount, @JsonProperty("days") final String days,
-                       @JsonProperty("num") final BigDecimal num, @JsonProperty("rate") final BigDecimal rate) {
-        this.amount = amount;
-        this.days = days;
-        this.numOfLoans = num;
-        this.rate = rate;
-    }
+  public OkCoinLend(
+      @JsonProperty("amount") final BigDecimal amount,
+      @JsonProperty("days") final String days,
+      @JsonProperty("num") final BigDecimal num,
+      @JsonProperty("rate") final BigDecimal rate) {
+    this.amount = amount;
+    this.days = days;
+    this.numOfLoans = num;
+    this.rate = rate;
+  }
 
-    public BigDecimal getAmount() {
+  public BigDecimal getAmount() {
 
-        return amount;
-    }
+    return amount;
+  }
 
-    public String getDays() {
+  public String getDays() {
 
-        return days;
-    }
+    return days;
+  }
 
-    public BigDecimal getNumOfLoans() {
+  public BigDecimal getNumOfLoans() {
 
-        return numOfLoans;
-    }
+    return numOfLoans;
+  }
 
-    public BigDecimal getRate() {
+  public BigDecimal getRate() {
 
-        return rate;
-    }
+    return rate;
+  }
 }

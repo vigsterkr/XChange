@@ -23,6 +23,7 @@ import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowOrderResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinBorrowResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinFuturesOrderResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinFuturesTradeHistoryResult;
+import org.knowm.xchange.okcoin.dto.trade.OkCoinLendDepthResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinOrderResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinPositionResult;
 import org.knowm.xchange.okcoin.dto.trade.OkCoinPriceLimit;
@@ -277,20 +278,36 @@ public interface OkCoin {
 
   @POST
   @Path("borrow_money.do")
-  OkCoinBorrowResult borrow(@FormParam("api_key") String apikey, @FormParam("amount") String amount, @FormParam("symbol") String symbol,
-                            @FormParam("days") String days, @FormParam("rate") String rate, @FormParam("sign") ParamsDigest sign) throws IOException;
+  OkCoinBorrowResult borrow(
+      @FormParam("api_key") String apikey,
+      @FormParam("amount") String amount,
+      @FormParam("symbol") String symbol,
+      @FormParam("days") String days,
+      @FormParam("rate") String rate,
+      @FormParam("sign") ParamsDigest sign)
+      throws IOException;
 
   @POST
   @Path("repayment.do")
-  OkCoinBorrowResult repay(@FormParam("api_key") String apikey, @FormParam("borrow_id") long borrowId, @FormParam("sign") ParamsDigest sign) throws IOException;
+  OkCoinBorrowResult repay(
+      @FormParam("api_key") String apikey,
+      @FormParam("borrow_id") long borrowId,
+      @FormParam("sign") ParamsDigest sign)
+      throws IOException;
 
   @POST
   @Path("borrow_order_info.do")
-  OkCoinBorrowOrderResult borrowInfo(@FormParam("api_key") String apikey, @FormParam("borrow_id") long borrowId, @FormParam("sign") ParamsDigest sign) throws IOException;
+  OkCoinBorrowOrderResult borrowInfo(
+      @FormParam("api_key") String apikey,
+      @FormParam("borrow_id") long borrowId,
+      @FormParam("sign") ParamsDigest sign)
+      throws IOException;
 
   @POST
   @Path("lend_depth.do")
-  OkCoinLendDepthResult lendDepth(@FormParam("api_key") String apikey, @FormParam("symbol") String symbol, @FormParam("sign") ParamsDigest sign) throws IOException;
-
-
+  OkCoinLendDepthResult lendDepth(
+      @FormParam("api_key") String apikey,
+      @FormParam("symbol") String symbol,
+      @FormParam("sign") ParamsDigest sign)
+      throws IOException;
 }

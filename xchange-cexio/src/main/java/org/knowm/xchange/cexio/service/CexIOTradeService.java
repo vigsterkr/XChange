@@ -113,7 +113,7 @@ public class CexIOTradeService extends CexIOTradeServiceRaw implements TradeServ
 
     List<Order> orders = new ArrayList<>();
     for (String orderId : orderIds) {
-      CexIOOpenOrder cexIOOrder = getOrderDetail(orderId);
+      CexIOOpenOrder cexIOOrder = getOrderFullDetail(orderId);
       orders.add(CexIOAdapters.adaptOrder(cexIOOrder));
     }
     return orders;

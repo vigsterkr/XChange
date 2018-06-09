@@ -151,8 +151,7 @@ public interface HitbtcAuthenticated extends Hitbtc {
    */
   @GET
   @Path("history/order")
-  List<HitbtcOrder> getHitbtcOrder(
-      @QueryParam("symbol") String symbol, @QueryParam("clientOrderId") String clientOrderId)
+  List<HitbtcOrder> getHitbtcOrder(@QueryParam("clientOrderId") String clientOrderId)
       throws IOException, HitbtcException;
 
   @GET

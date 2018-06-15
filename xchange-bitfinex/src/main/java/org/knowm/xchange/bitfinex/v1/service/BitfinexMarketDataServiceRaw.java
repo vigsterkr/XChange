@@ -12,8 +12,8 @@ import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexLend;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexLendDepth;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexSymbolDetail;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexTicker;
-import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexTrade;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexTickerV2;
+import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexTrade;
 import org.knowm.xchange.currency.CurrencyPair;
 
 /**

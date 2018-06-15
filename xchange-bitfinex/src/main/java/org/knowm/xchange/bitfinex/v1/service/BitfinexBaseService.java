@@ -39,9 +39,7 @@ public class BitfinexBaseService extends BaseExchangeService implements BaseServ
             getClientConfig());
     this.bitfinexV2 =
         RestProxyFactory.createProxy(
-            BitfinexV2.class,
-            exchange.getExchangeSpecification().getSslUri(),
-            getClientConfig());
+            BitfinexV2.class, exchange.getExchangeSpecification().getSslUri(), getClientConfig());
     this.apiKey = exchange.getExchangeSpecification().getApiKey();
     this.signatureCreator =
         BitfinexHmacPostBodyDigest.createInstance(

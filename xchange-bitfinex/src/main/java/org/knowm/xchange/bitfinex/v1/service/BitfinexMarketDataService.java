@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitfinex.v1.BitfinexAdapters;
 import org.knowm.xchange.bitfinex.v1.BitfinexUtils;
@@ -55,9 +54,12 @@ public class BitfinexMarketDataService extends BitfinexMarketDataServiceRaw
     if (!(params instanceof CurrencyPairsParam)) {
       throw new IllegalArgumentException("Params must be instance of CurrencyPairsParam");
     }
-    List<String> currencyPairs = ((CurrencyPairsParam) params).getCurrencyPairs().stream()
-        .map(currencyPair -> BitfinexUtils.toPairStringV2(currencyPair))
-        .collect(Collectors.toList());
+    List<String> currencyPairs =
+        ((CurrencyPairsParam) params)
+            .getCurrencyPairs()
+            .stream()
+            .map(currencyPair -> BitfinexUtils.toPairStringV2(currencyPair))
+            .collect(Collectors.toList());
     return getBitfinexTickers(currencyPairs)
         .stream()
         .map(ticker -> BitfinexAdapters.adaptTicker(ticker))

@@ -26,6 +26,10 @@ public final class BitfinexUtils {
         + adaptXchangeCurrency(currencyPair.counter.toString());
   }
 
+  public static String toPairStringV2(CurrencyPair currencyPair) {
+    return "t" + toPairString(currencyPair).toUpperCase();
+  }
+
   /**
    * From the reference documentation for field withdraw_type (2018-02-14); can be one of the
    * following ['bitcoin', 'litecoin', 'ethereum', 'ethereumc', 'mastercoin', 'zcash', 'monero',

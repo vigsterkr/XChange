@@ -3,6 +3,8 @@ package org.knowm.xchange.bitfinex.v1.service;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitfinex.v1.BitfinexAdapters;
 import org.knowm.xchange.bitfinex.v1.BitfinexUtils;
@@ -18,6 +20,8 @@ import org.knowm.xchange.dto.trade.FixedRateLoanOrder;
 import org.knowm.xchange.dto.trade.FloatingRateLoanOrder;
 import org.knowm.xchange.exceptions.ExchangeException;
 import org.knowm.xchange.service.marketdata.MarketDataService;
+import org.knowm.xchange.service.marketdata.params.CurrencyPairsParam;
+import org.knowm.xchange.service.marketdata.params.Params;
 
 /**
  * Implementation of the market data service for Bitfinex
@@ -44,6 +48,20 @@ public class BitfinexMarketDataService extends BitfinexMarketDataServiceRaw
 
     return BitfinexAdapters.adaptTicker(
         getBitfinexTicker(BitfinexUtils.toPairString(currencyPair)), currencyPair);
+  }
+
+  @Override
+  public List<Ticker> getTickers(Params params) throws IOException {
+    if (!(params instanceof CurrencyPairsParam)) {
+      throw new IllegalArgumentException("Params must be instance of CurrencyPairsParam");
+    }
+    List<String> currencyPairs = ((CurrencyPairsParam) params).getCurrencyPairs().stream()
+        .map(currencyPair -> BitfinexUtils.toPairStringV2(currencyPair))
+        .collect(Collectors.toList());
+    return getBitfinexTickers(currencyPairs)
+        .stream()
+        .map(ticker -> BitfinexAdapters.adaptTicker(ticker))
+        .collect(Collectors.toList());
   }
 
   /** @param args If two integers are provided, then those count as limit bid and limit ask count */

@@ -4,6 +4,7 @@ import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitfinex.common.dto.BitfinexException;
 import org.knowm.xchange.bitfinex.common.service.BitfinexHmacPostBodyDigest;
 import org.knowm.xchange.bitfinex.common.service.BitfinexPayloadDigest;
+import org.knowm.xchange.bitfinex.v1.BitfinexV2;
 import org.knowm.xchange.bitfinex.v1.BitfinexAuthenticated;
 import org.knowm.xchange.exceptions.ExchangeException;
 import org.knowm.xchange.exceptions.FundsExceededException;
@@ -18,6 +19,7 @@ public class BitfinexBaseService extends BaseExchangeService implements BaseServ
 
   protected final String apiKey;
   protected final BitfinexAuthenticated bitfinex;
+  protected final BitfinexV2 bitfinexV2;
   protected final ParamsDigest signatureCreator;
   protected final ParamsDigest payloadCreator;
 
@@ -33,6 +35,11 @@ public class BitfinexBaseService extends BaseExchangeService implements BaseServ
     this.bitfinex =
         RestProxyFactory.createProxy(
             BitfinexAuthenticated.class,
+            exchange.getExchangeSpecification().getSslUri(),
+            getClientConfig());
+    this.bitfinexV2 =
+        RestProxyFactory.createProxy(
+            BitfinexV2.class,
             exchange.getExchangeSpecification().getSslUri(),
             getClientConfig());
     this.apiKey = exchange.getExchangeSpecification().getApiKey();

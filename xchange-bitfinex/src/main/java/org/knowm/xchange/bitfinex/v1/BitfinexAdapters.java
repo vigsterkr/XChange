@@ -17,6 +17,7 @@ import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexLevel;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexSymbolDetail;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexTicker;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexTrade;
+import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexTickerV2;
 import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexAccountInfosResponse;
 import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexOrderStatusResponse;
 import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexTradeResponse;
@@ -76,6 +77,10 @@ public final class BitfinexAdapters {
     String tradableIdentifier = adaptBitfinexCurrency(bitfinexSymbol.substring(0, 3));
     String transactionCurrency = adaptBitfinexCurrency(bitfinexSymbol.substring(3));
     return new CurrencyPair(tradableIdentifier, transactionCurrency);
+  }
+
+  public static CurrencyPair adaptCurrencyPairV2(String bitfinexSymbol) {
+    return adaptCurrencyPair(bitfinexSymbol.substring(1));
   }
 
   public static OrderStatus adaptOrderStatus(BitfinexOrderStatusResponse order) {
@@ -264,6 +269,20 @@ public final class BitfinexAdapters {
         .low(low)
         .volume(volume)
         .timestamp(timestamp)
+        .build();
+  }
+
+  public static Ticker adaptTicker(BitfinexTickerV2 bitfinexTicker) {
+    return new Ticker.Builder()
+        .currencyPair(adaptCurrencyPairV2(bitfinexTicker.getSymbol()))
+        .bid(bitfinexTicker.getBid())
+        .bidSize(bitfinexTicker.getBidSize())
+        .ask(bitfinexTicker.getAsk())
+        .askSize(bitfinexTicker.getAskSize())
+        .last(bitfinexTicker.getLastPrice())
+        .volume(bitfinexTicker.getVolume())
+        .high(bitfinexTicker.getHigh())
+        .low(bitfinexTicker.getLow())
         .build();
   }
 

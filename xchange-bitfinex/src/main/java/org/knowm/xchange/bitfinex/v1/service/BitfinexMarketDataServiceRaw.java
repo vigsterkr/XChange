@@ -13,6 +13,7 @@ import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexLendDepth;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexSymbolDetail;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexTicker;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexTrade;
+import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexTickerV2;
 import org.knowm.xchange.currency.CurrencyPair;
 
 /**
@@ -42,6 +43,10 @@ public class BitfinexMarketDataServiceRaw extends BitfinexBaseService {
     } catch (BitfinexException e) {
       throw handleException(e);
     }
+  }
+
+  public List<BitfinexTickerV2> getBitfinexTickers(List<String> currencyPairs) throws IOException {
+    return bitfinexV2.getTickers(currencyPairs);
   }
 
   public BitfinexDepth getBitfinexOrderBook(String pair, Integer limitBids, Integer limitAsks)
